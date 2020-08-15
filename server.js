@@ -2,6 +2,7 @@ const mysql = require("mysql")
 const inquirer = require("inquirer")
 require('dotenv').config()
 
+// connects mysql db to the server.js
 let connection = mysql.createConnection({
     host: "localhost",
 
@@ -22,7 +23,13 @@ connection.connect(function (err) {
     start()
 });
 
+// starts program
 function start() {
+    console.log("*******************************")
+    console.log("**                           **")
+    console.log("**     EMPLOYEE  TRACKER     **")
+    console.log("**                           **")
+    console.log("*******************************")
     inquirer.prompt({
         type: "list",
         name: "select",
@@ -75,6 +82,42 @@ function addDepartments() {
     })
         .then(function (answer) {
             connection.query("INSERT INTO department SET ?", { name: answer.department }, function (err) {
+                if (err) throw err
+                start()
+            })
+        })
+}
+
+function addRoles() {
+    connection.query("SELECT * FROM department", function (err, res) {
+        if (err) throw err
+        let emp_department = res.map(department => {
+            return ({
+                name: department.name,
+                value: department.id
+            })
+        })
+    })
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "title",
+            message: "Enter your role title."
+        },
+        {
+            type: "input",
+            name: "salary",
+            message: "Enter salary for role."
+        },
+        {
+            type: "list",
+            name: "department_id",
+            message: "Choose the department id for role.",
+            choices: emp_department
+        }
+    ])
+        .then(function (response) {
+            connection.query("INSERT INTO role SET ?", { title: response.title, salary: response.salary, department_id: response.department_id }, function (err) {
                 if (err) throw err
                 start()
             })
