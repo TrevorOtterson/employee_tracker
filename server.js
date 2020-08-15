@@ -1,6 +1,6 @@
-let mysql = require("mysql");
-let inquirer = require("inquirer");
-require('dotenv').config();
+const mysql = require("mysql")
+const inquirer = require("inquirer")
+require('dotenv').config()
 
 let connection = mysql.createConnection({
     host: "localhost",
@@ -17,44 +17,66 @@ let connection = mysql.createConnection({
 });
 
 connection.connect(function (err) {
-    if (err) throw err;
-    console.log("connected as id " + connection.threadId);
-    start();
+    if (err) throw err
+    console.log("connected as id " + connection.threadId)
+    start()
 });
 
 function start() {
-    inquirer.prompt(
-        {
-            type: "list",
-            name: "what",
-            message: "Select what you would like to do.",
-            choices: ["Add Departments", "Add Roles", "Add Employees", "View Departments", "View Roles", "View Employees", "Update Employee Roles", "Done"]
-        })
+    inquirer.prompt({
+        type: "list",
+        name: "select",
+        message: "Select what you would like to do.",
+        choices: [
+            "Add Departments",
+            "Add Roles",
+            "Add Employees",
+            "View Departments",
+            "View Roles",
+            "View Employees",
+            "Update Employee Roles",
+            "Exit"
+        ]
+    })
         .then(function (answer) {
-            switch (answer.what) {
+            switch (answer.select) {
                 case "Add Departments":
-                    addDepartments();
-                    break;
+                    addDepartments()
+                    break
                 case "Add Roles":
-                    addRoles();
-                    break;
+                    addRoles()
+                    break
                 case "Add Employees":
-                    addEmployees();
-                    break;
+                    addEmployees()
+                    break
                 case "View Departments":
-                    viewDepartments();
-                    break;
+                    viewDepartments()
+                    break
                 case "View Roles":
-                    viewRoles();
-                    break;
+                    viewRoles()
+                    break
                 case "View Employees":
-                    viewEmployees();
-                    break;
+                    viewEmployees()
+                    break
                 case "Update Employee Roles":
-                    updateEmpolyeeRoles();
-                    break;
+                    updateEmpolyeeRoles()
+                    break
                 default:
-                    connection.end();
+                    connection.end()
             }
+        })
+}
+
+function addDepartments() {
+    inquirer.prompt({
+        type: "input",
+        name: "department",
+        message: "Enter your department."
+    })
+        .then(function (answer) {
+            connection.query("INSERT INTO department SET ?", { name: answer.department }, function (err) {
+                if (err) throw err
+                start()
+            })
         })
 }

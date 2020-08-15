@@ -19,6 +19,8 @@
   "homepage": "https://github.com/TrevorOtterson/employee_tracker#readme",
   "dependencies": {
     "console.table": "^0.10.0",
+    "dotenv": "^8.2.0",
+    "env": "0.0.2",
     "inquirer": "^7.3.3",
     "mysql": "^2.18.1"
   }
