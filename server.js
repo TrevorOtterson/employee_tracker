@@ -26,9 +26,9 @@ connection.connect(function (err) {
 // starts program
 function start() {
     console.log('*******************************')
-    console.log('**                           **')
-    console.log('**     EMPLOYEE  TRACKER     **')
-    console.log('**                           **')
+    console.log('** ˚˚          ˚         ˚   **')
+    console.log('**     EMPLOYEE ˚ TRACKER    **')
+    console.log('**   ˚          ˚  ˚      ˚  **')
     console.log('*******************************')
     inquirer.prompt({
         type: 'list',
@@ -175,7 +175,14 @@ function addEmployees() {
                             start()
                         })
                     }
-                })
+                else {
+                    connection.query('INSERT INTO employee SET ?', { first_name: answer.first_name, last_name: answer.last_name, role_id: answer.role_id, manager_id: answer.manager_id }, function (err) {
+                        if (err) throw err
+                        start()
+
+                    })
+                }
+            })
         })
     })
 }
@@ -183,6 +190,15 @@ function addEmployees() {
 function viewDepartments() {
     let view_department = 'SELECT * FROM department'
     connection.query(view_department, function (err, data) {
+        if (err) throw err
+        console.table(data)
+        start()
+    })
+}
+
+function viewRoles() {
+    let view_role = 'SELECT * FROM role'
+    connection.query(view_role, function (err, data) {
         if (err) throw err
         console.table(data)
         start()
