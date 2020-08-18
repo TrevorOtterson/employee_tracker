@@ -22,4 +22,4 @@ npm init, npm i, npm i inquirer, npm i mysql, npm i env, npm i dotenv
 
 ## Command line Screenshot
 
-<img src="./assets/images/command_line.png" alt="Screenshot Of Application In Terminal" width="400"/>
+<img src="./Assets/images/command_line.png" alt="Screenshot Of Application In Terminal" width="400"/>
