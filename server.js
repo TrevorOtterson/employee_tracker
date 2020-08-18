@@ -75,6 +75,11 @@ function start() {
 }
 
 function addDepartments() {
+    console.log('*******************************')
+    console.log('** ˚˚          ˚         ˚   **')
+    console.log('**      ADD  DEPARTMENT      **')
+    console.log('**   ˚          ˚  ˚      ˚  **')
+    console.log('*******************************')
     inquirer.prompt({
         type: 'input',
         name: 'department',
@@ -89,6 +94,11 @@ function addDepartments() {
 }
 
 function addRoles() {
+    console.log('*******************************')
+    console.log('** ˚˚          ˚         ˚   **')
+    console.log('**         ADD ROLES         **')
+    console.log('**   ˚          ˚  ˚      ˚  **')
+    console.log('*******************************')
     connection.query('SELECT * FROM department', function (err, res) {
         if (err) throw err
         let emp_department = res.map(department => {
@@ -109,8 +119,8 @@ function addRoles() {
                 message: 'Enter salary for role.'
             },
             {
-                type: 'listlist',
-                name: 'department_i',
+                type: 'list',
+                name: 'department_id',
                 message: 'Choose the department id for role.',
                 choices: emp_department
             }
@@ -125,6 +135,11 @@ function addRoles() {
 }
 
 function addEmployees() {
+    console.log('*******************************')
+    console.log('** ˚˚          ˚         ˚   **')
+    console.log('**       ADD EMPLOYEES       **')
+    console.log('**   ˚          ˚  ˚      ˚  **')
+    console.log('*******************************')
     connection.query('SELECT * FROM role', function (err, res) {
         if (err) throw err
         let emp_role = res.map(role => {
@@ -168,18 +183,17 @@ function addEmployees() {
                     }
                 }
             ])
-                .then(function (response) {
-                    if (!response.manager_id) {
-                        connection.query('INSERT INTO employee SET ?', { first_name: answer.first_name, last_name: answer.last_name, role_id: answer.role_id }, function (err) {
-                            if (err) throw err
-                            start()
+                .then(function (answer) {
+                    if (!answer.manager_id) {
+                    connection.query('INSERT INTO employee SET ?', { first_name: answer.first_name, last_name: answer.last_name, role_id: answer.role_id }, function (err) {
+                        if (err) throw err
+                        start()
                         })
                     }
-                else {
+                    else {
                     connection.query('INSERT INTO employee SET ?', { first_name: answer.first_name, last_name: answer.last_name, role_id: answer.role_id, manager_id: answer.manager_id }, function (err) {
                         if (err) throw err
                         start()
-
                     })
                 }
             })
@@ -188,6 +202,11 @@ function addEmployees() {
 }
 
 function viewDepartments() {
+    console.log('*******************************')
+    console.log('** ˚˚          ˚         ˚   **')
+    console.log('**        DEPARTMENTS        **')
+    console.log('**   ˚          ˚  ˚      ˚  **')
+    console.log('*******************************')
     let view_department = 'SELECT * FROM department'
     connection.query(view_department, function (err, data) {
         if (err) throw err
@@ -197,6 +216,11 @@ function viewDepartments() {
 }
 
 function viewRoles() {
+    console.log('*******************************')
+    console.log('** ˚˚          ˚         ˚   **')
+    console.log('**           ROLES           **')
+    console.log('**   ˚          ˚  ˚      ˚  **')
+    console.log('*******************************')
     let view_role = 'SELECT * FROM role'
     connection.query(view_role, function (err, data) {
         if (err) throw err
@@ -206,6 +230,11 @@ function viewRoles() {
 }
 
 function viewEmployees() {
+    console.log('*******************************')
+    console.log('** ˚˚          ˚         ˚   **')
+    console.log('**         EMPLOYEES         **')
+    console.log('**   ˚          ˚  ˚      ˚  **')
+    console.log('*******************************')
     let view_employee = 'SELECT * FROM employee'
     connection.query(view_employee, function (err, data) {
         if (err) throw err
@@ -215,6 +244,11 @@ function viewEmployees() {
 }
 
 function updateEmployeeRoles() {
+    console.log('*******************************')
+    console.log('** ˚˚          ˚         ˚   **')
+    console.log('**     UPDATE  EMPLOYEES     **')
+    console.log('**   ˚          ˚  ˚      ˚  **')
+    console.log('*******************************')
     let update_emp_roles = 'SELECT * FROM role'
     connection.query(update_emp_roles, function (err, data) {
         if (err) throw err
